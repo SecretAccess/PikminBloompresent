@@ -124,9 +124,6 @@
         <div class="badge">公式キャンペーン</div>
         <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
-        <!-- 画像 -->
-        <img src="https://example.com/pikmin_image.jpg" alt="ピクミンブルーム特別アイテム" class="pikmin-image">
-        
         <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>特別アイテム</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
@@ -141,53 +138,4 @@
 
     <script>
         function startProcess() {
-            // 最初のメッセージを表示
-            document.getElementById("message1").style.display = "block";
-            
-            // 少し遅れて読込中の演出を表示
-            setTimeout(() => {
-                document.getElementById("message1").style.display = "none";
-                document.getElementById("loader").style.display = "block";
-
-                // 読込演出後にログイン完了メッセージを表示
-                setTimeout(() => {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("message2").style.display = "block";
-
-                    // 最終的にキャンペーン画面に移行
-                    setTimeout(() => {
-                        document.getElementById("initialScreen").style.display = "none";
-                        document.getElementById("campaignScreen").style.display = "block";
-                    }, 1500); // キャンペーン画面に移行するまでの時間
-                }, 2000); // 読込中の演出時間
-            }, 1500); // 最初のメッセージ表示時間
-        }
-
-        function startLottery() {
-            const button = document.querySelector(".start-button");
-            button.disabled = true;
-            button.style.backgroundColor = "#ccc";
-            button.innerText = "抽選中...";
-
-            setTimeout(() => {
-                document.getElementById("result").innerText = "抽選結果を確認中です...";
-                document.getElementById("result").style.display = "block";
-
-                setTimeout(() => {
-                    document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    
-                    setTimeout(() => {
-                        document.getElementById("popup").style.display = "block";
-                    }, 1500); // ポップアップ表示
-                }, 2000);
-            }, 1500);
-        }
-
-        function revealFinalMessage() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒が姉になります！";
-            document.getElementById("final-message").style.display = "block";
-        }
-    </script>
-</body>
-</html>
+            // 最初のメ
