@@ -3,155 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>激安！特別セール中</title>
+    <title>公式 30万円プレゼントキャンペーン</title>
     <style>
         body {
-            background: radial-gradient(circle, #f5a623, #ff4500);
-            color: #fff;
+            background-color: #f4f4f9;
+            color: #333;
             text-align: center;
             font-family: "Arial", sans-serif;
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 20px;
-            background: #ff5e00;
-            border: 4px dashed #f5a623;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            margin-top: 30px;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
             position: relative;
             z-index: 10;
-            color: #fdfdfd;
         }
         h1 {
-            color: #fff700;
-            font-size: 36px;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-            animation: blink 1s infinite;
+            color: #ff9900;
+            font-size: 32px;
+            margin-bottom: 15px;
         }
-        .alert {
-            font-size: 22px;
-            color: #ffe600;
+        .badge {
+            font-size: 18px;
+            color: #fff;
+            background: #ff9900;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
             font-weight: bold;
             margin-bottom: 20px;
-            background: #ff0000;
-            padding: 10px;
-            border-radius: 5px;
-            animation: fadeinout 1s infinite;
         }
-        .progress-container {
-            width: 100%;
-            background-color: #fff;
-            border-radius: 25px;
-            overflow: hidden;
-            margin-top: 20px;
+        .description {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+            margin: 20px 0;
         }
-        .progress-bar {
-            width: 0;
-            height: 30px;
-            background-color: #ff4500;
-            text-align: center;
-            line-height: 30px;
-            color: #fff;
-            font-weight: bold;
-            transition: width 0.5s ease;
-        }
-        .status-message {
+        .start-button {
+            display: inline-block;
+            padding: 15px 30px;
             font-size: 20px;
-            color: #ffe600;
-            margin-top: 15px;
+            color: #fff;
+            background-color: #ff9900;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(255, 153, 0, 0.4);
         }
-        #final-message {
-            font-size: 22px;
-            color: #fff700;
+        .start-button:hover {
+            background-color: #e68a00;
+            transform: scale(1.05);
+        }
+        #result, #popup, #final-message {
+            font-size: 20px;
+            color: #333;
             font-weight: bold;
             display: none;
             margin-top: 30px;
+        }
+        #popup {
+            background: #f0f0f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: none;
         }
         .popup-button {
             display: inline-block;
             padding: 12px 20px;
             font-size: 18px;
-            color: #ff5e00;
-            background-color: #fff700;
-            border: 2px solid #ff5e00;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
-            text-decoration: none;
         }
         .popup-button:hover {
-            background-color: #ffcc00;
-            transform: scale(1.05);
+            background-color: #45a049;
         }
-        /* 点滅アニメーション */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        @keyframes fadeinout {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .highlight {
+            color: #ff9900;
+            font-weight: bold;
         }
     </style>
 </head>
-<body onload="startProcess()">
+<body>
     <div class="container">
-        <h1>激安！今だけ特別セール中</h1>
-        <p class="alert">⚠️ 注意！データが危険にさらされています ⚠️</p>
-        <p class="status-message" id="statusMessage">データ削除中...</p>
+        <div class="badge">公式キャンペーン</div>
+        <h1>30万円プレゼントキャンペーン！</h1>
+        <p class="description">日頃のご愛顧に感謝し、抽選で<b class="highlight">現金30万円</b>が当たる特別キャンペーンを開催中です！今すぐ抽選にご参加ください。</p>
+        <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
-        <!-- プログレスバー -->
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar">0%</div>
+        <p id="result"></p>
+        <div id="popup">
+            <p>おめでとうございます！<br>特別なメッセージを受け取りますか？</p>
+            <button class="popup-button" onclick="revealFinalMessage()">メッセージを見る</button>
         </div>
 
-        <!-- 最終メッセージ -->
         <p id="final-message"></p>
-        <a class="popup-button" id="nextButton" onclick="revealFinalMessage()">ここをクリック</a>
     </div>
 
     <script>
-        let progress = 0;
-        const progressBar = document.getElementById("progressBar");
-        const statusMessage = document.getElementById("statusMessage");
-        const finalMessage = document.getElementById("final-message");
-        const nextButton = document.getElementById("nextButton");
+        function startLottery() {
+            const button = document.querySelector(".start-button");
+            button.disabled = true;
+            button.style.backgroundColor = "#ccc";
+            button.innerText = "抽選中...";
 
-        function startProcess() {
-            const progressInterval = setInterval(() => {
-                progress += 10;
-                progressBar.style.width = progress + "%";
-                progressBar.textContent = progress + "%";
+            setTimeout(() => {
+                document.getElementById("result").innerText = "抽選結果を確認中です...";
+                document.getElementById("result").style.display = "block";
 
-                if (progress === 30) {
-                    statusMessage.innerText = "システム解析中...";
-                } else if (progress === 60) {
-                    statusMessage.innerText = "データ復旧中...";
-                } else if (progress === 90) {
-                    statusMessage.innerText = "最終確認中...";
-                }
-
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    statusMessage.style.display = "none";
-                    progressBar.textContent = "完了";
-                    showFinalButton();
-                }
-            }, 1000);
-        }
-
-        function showFinalButton() {
-            nextButton.style.display = "inline-block";
+                setTimeout(() => {
+                    document.getElementById("result").innerText = "おめでとうございます！30万円のプレゼントに当選しました！";
+                    
+                    setTimeout(() => {
+                        document.getElementById("popup").style.display = "block";
+                    }, 1500); // ポップアップ表示
+                }, 2000);
+            }, 1500);
         }
 
         function revealFinalMessage() {
-            nextButton.style.display = "none";
-            finalMessage.innerHTML = "実は2025年6月に…<br>莉緒が姉になります！";
-            finalMessage.style.display = "block";
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒が姉になります！";
+            document.getElementById("final-message").style.display = "block";
         }
     </script>
 </body>
