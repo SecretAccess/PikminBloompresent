@@ -29,14 +29,44 @@
             margin-bottom: 20px;
             text-shadow: 1px 1px 8px rgba(255, 69, 0, 0.8);
         }
-        .alert, .warning {
+        .alert {
             font-size: 20px;
             line-height: 1.6;
             color: #ffbbbb;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: bold;
         }
-        .start-button, .next-button, .popup-button {
+        .progress-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 25px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 0;
+            height: 30px;
+            background-color: #ff4500;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+        .status-message {
+            font-size: 18px;
+            color: #ffdddd;
+            margin-top: 20px;
+            animation: fadeinout 1s ease-in-out;
+        }
+        #final-message {
+            font-size: 20px;
+            color: #ff4500;
+            font-weight: bold;
+            display: none;
+            margin-top: 30px;
+        }
+        .popup-button {
             display: inline-block;
             padding: 15px 30px;
             font-size: 18px;
@@ -47,103 +77,76 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 10px rgba(255, 69, 0, 0.6);
-            margin: 10px;
+            margin-top: 20px;
+            display: none;
         }
-        .start-button:hover, .next-button:hover, .popup-button:hover {
+        .popup-button:hover {
             background-color: #a52a2a;
             transform: scale(1.05);
         }
-        #result, #popup, #final-message, #loading {
-            font-size: 20px;
-            margin-top: 30px;
-            color: #ff4500;
-            font-weight: bold;
-            display: none;
-        }
-        #loading {
-            color: #ff0000;
-            text-shadow: 0px 0px 6px rgba(255, 0, 0, 0.7);
-            animation: blink 1s infinite;
-        }
-        .highlight {
-            color: #ff4500;
-            font-weight: bold;
-        }
-        .badge {
-            font-size: 14px;
-            color: #000;
-            background: #ff4500;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        /* 点滅アニメーション */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        @keyframes fadeinout {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
-<body onload="showAlert()">
+<body onload="startProcess()">
     <div class="container">
-        <div class="badge">重要な通知</div>
         <h1>警告: データ保護違反</h1>
-        <p class="alert">アクセスによりあなたのデータが危険にさらされています！</p>
-        <p id="loading">システム検査中...</p>
+        <p class="alert">データ削除プロセスが開始されました...</p>
 
-        <div id="popup">
-            <p id="popup-message" class="warning">不正アクセスが検出されました。このまま進みますか？</p>
-            <button class="popup-button" onclick="revealNextStep(true)">進む</button>
-            <button class="popup-button" onclick="revealNextStep(false)">キャンセル</button>
+        <!-- プログレスバー -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
         </div>
 
+        <!-- 状態メッセージ -->
+        <p class="status-message" id="statusMessage">データ削除中...</p>
+
+        <!-- 最終メッセージ -->
         <p id="final-message"></p>
-        <button class="next-button" id="nextButton" onclick="revealNextStep(true)" style="display: none;">続きを見る</button>
+        <button class="popup-button" id="nextButton" onclick="revealFinalMessage()">続きを見る</button>
     </div>
 
     <script>
-        let revealStep = 0;
+        let progress = 0;
+        let step = 0;
+        const progressBar = document.getElementById("progressBar");
+        const statusMessage = document.getElementById("statusMessage");
+        const finalMessage = document.getElementById("final-message");
+        const nextButton = document.getElementById("nextButton");
 
-        function showAlert() {
-            document.querySelector(".alert").innerText = "警告: データ削除が開始されました...";
+        function startProcess() {
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + "%";
+                progressBar.textContent = progress + "%";
 
-            // 少し遅れてローディング風のメッセージを表示
-            setTimeout(() => {
-                document.getElementById("loading").style.display = "block";
+                if (progress === 30) {
+                    statusMessage.innerText = "システム解析中...";
+                } else if (progress === 60) {
+                    statusMessage.innerText = "データ復旧中...";
+                } else if (progress === 90) {
+                    statusMessage.innerText = "最終確認中...";
+                }
 
-                setTimeout(() => {
-                    document.getElementById("loading").style.display = "none";
-                    document.getElementById("popup").style.display = "block";
-                }, 2000);
-            }, 2000);
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    statusMessage.style.display = "none";
+                    progressBar.textContent = "完了";
+                    showFinalButton();
+                }
+            }, 1000); // 1秒ごとに進行
         }
 
-        function revealNextStep(isInterested) {
-            const finalMessage = document.getElementById("final-message");
-            const popup = document.getElementById("popup");
-            const popupMessage = document.getElementById("popup-message");
-            const nextButton = document.getElementById("nextButton");
+        function showFinalButton() {
+            nextButton.style.display = "inline-block";
+        }
 
-            if (!isInterested && revealStep === 0) {
-                popupMessage.innerText = "本当に進まないと、重大な情報を見逃します。";
-                return;
-            }
-
-            if (revealStep === 0) {
-                popup.style.display = "none";
-                finalMessage.innerText = "実は2025年6月に…";
-                finalMessage.style.display = "block";
-                nextButton.style.display = "inline-block";
-            } else if (revealStep === 1) {
-                finalMessage.innerText = "実は莉緒が2025年6月に…";
-            } else if (revealStep === 2) {
-                finalMessage.innerText = "莉緒が2025年6月にお姉さんになります！";
-                nextButton.style.display = "none";
-            }
-
-            revealStep++;
+        function revealFinalMessage() {
+            nextButton.style.display = "none";
+            finalMessage.innerHTML = "実は2025年6月に…<br>莉緒が姉になります！";
+            finalMessage.style.display = "block";
         }
     </script>
 </body>
