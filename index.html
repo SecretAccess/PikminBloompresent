@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ピクミンブルーム 公式キャンペーン</title>
+    <title>ピクミンブルーム／特別アイテムプレゼント！</title>
     <style>
         body {
             background-color: #f1f8e9;
@@ -21,121 +21,59 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .badge {
-            font-size: 16px;
-            color: #ffffff;
-            background-color: #4caf50;
-            padding: 6px 12px;
-            border-radius: 12px;
-            display: inline-block;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        h1 {
-            font-size: 28px;
-            color: #4caf50;
-            margin-bottom: 20px;
-        }
-        .description {
+        .message {
             font-size: 18px;
-            color: #666;
-            margin: 20px 0;
-        }
-        .start-button {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #4caf50;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
-        }
-        .start-button:hover {
-            background-color: #388e3c;
-        }
-        #result, #popup, #final-message {
-            font-size: 18px;
-            margin-top: 30px;
-            display: none;
-            color: #4caf50;
-            font-weight: bold;
-        }
-        #popup {
-            background: #f9fbe7;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .popup-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #388e3c;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
             margin-top: 20px;
+            color: #4caf50;
+            font-weight: bold;
+            display: none;
         }
-        .popup-button:hover {
-            background-color: #2e7d32;
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 6px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 6px solid #4caf50;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
         }
-        .pikmin-image {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body>
+<body onload="displayMessages()">
     <div class="container">
-        <div class="badge">公式キャンペーン</div>
-       <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
+        <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
-       
+        <!-- 最初のメッセージ -->
+        <p id="message1" class="message">ピクミンブルームアカウントを確認中です。</p>
         
-        <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>特別アイテム</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
-        <button class="start-button" onclick="startLottery()">抽選スタート</button>
-
-        <p id="result"></p>
-        <div id="popup">
-            <p>残念ながら今回の抽選はハズレでしたが、特別なお知らせがあります。</p>
-            <button class="popup-button" onclick="revealFinalMessage()">お知らせを見る</button>
-        </div>
-
-        <p id="final-message"></p>
+        <!-- 読込中の演出 -->
+        <div id="loader" class="loader"></div>
+        
+        <!-- 確認完了メッセージ -->
+        <p id="message2" class="message">山姥さん、ログインが確認できました。</p>
     </div>
 
     <script>
-        function startLottery() {
-            const button = document.querySelector(".start-button");
-            button.disabled = true;
-            button.style.backgroundColor = "#ccc";
-            button.innerText = "抽選中...";
-
+        function displayMessages() {
+            // 最初のメッセージを表示
+            document.getElementById("message1").style.display = "block";
+            
+            // 少し遅れて読込中の演出を表示
             setTimeout(() => {
-                document.getElementById("result").innerText = "抽選結果を確認中です...";
-                document.getElementById("result").style.display = "block";
+                document.getElementById("message1").style.display = "none";
+                document.getElementById("loader").style.display = "block";
 
+                // 読込演出後に最終メッセージを表示
                 setTimeout(() => {
-                    document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    
-                    setTimeout(() => {
-                        document.getElementById("popup").style.display = "block";
-                    }, 1500); // ポップアップ表示
-                }, 2000);
-            }, 1500);
-        }
-
-        function revealFinalMessage() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
-            document.getElementById("final-message").style.display = "block";
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("message2").style.display = "block";
+                }, 2000); // 読込中の演出時間
+            }, 1500); // 最初のメッセージ表示時間
         }
     </script>
 </body>
