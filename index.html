@@ -3,42 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特別な通知</title>
+    <title>激安！特別セール中</title>
     <style>
         body {
-            background: radial-gradient(circle, #300000, #000000);
-            color: #ffdddd;
+            background: radial-gradient(circle, #f5a623, #ff4500);
+            color: #fff;
             text-align: center;
-            font-family: "Georgia", serif;
+            font-family: "Arial", sans-serif;
             overflow-x: hidden;
         }
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.85);
-            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.7);
-            border-radius: 12px;
-            margin-top: 50px;
+            background: #ff5e00;
+            border: 4px dashed #f5a623;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-top: 30px;
             position: relative;
             z-index: 10;
+            color: #fdfdfd;
         }
         h1 {
-            color: #ff4500;
-            font-size: 32px;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 8px rgba(255, 69, 0, 0.8);
+            color: #fff700;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            animation: blink 1s infinite;
         }
         .alert {
-            font-size: 20px;
-            line-height: 1.6;
-            color: #ffbbbb;
-            margin-bottom: 20px;
+            font-size: 22px;
+            color: #ffe600;
             font-weight: bold;
+            margin-bottom: 20px;
+            background: #ff0000;
+            padding: 10px;
+            border-radius: 5px;
+            animation: fadeinout 1s infinite;
         }
         .progress-container {
             width: 100%;
-            background-color: #ddd;
+            background-color: #fff;
             border-radius: 25px;
             overflow: hidden;
             margin-top: 20px;
@@ -54,63 +60,62 @@
             transition: width 0.5s ease;
         }
         .status-message {
-            font-size: 18px;
-            color: #ffdddd;
-            margin-top: 20px;
-            animation: fadeinout 1s ease-in-out;
+            font-size: 20px;
+            color: #ffe600;
+            margin-top: 15px;
         }
         #final-message {
-            font-size: 20px;
-            color: #ff4500;
+            font-size: 22px;
+            color: #fff700;
             font-weight: bold;
             display: none;
             margin-top: 30px;
         }
         .popup-button {
             display: inline-block;
-            padding: 15px 30px;
+            padding: 12px 20px;
             font-size: 18px;
-            color: #fff;
-            background-color: #8b0000;
-            border: 2px solid #ff4500;
+            color: #ff5e00;
+            background-color: #fff700;
+            border: 2px solid #ff5e00;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.6);
             margin-top: 20px;
-            display: none;
+            text-decoration: none;
         }
         .popup-button:hover {
-            background-color: #a52a2a;
+            background-color: #ffcc00;
             transform: scale(1.05);
         }
+        /* 点滅アニメーション */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
         @keyframes fadeinout {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
 <body onload="startProcess()">
     <div class="container">
-        <h1>警告: データ保護違反</h1>
-        <p class="alert">データ削除プロセスが開始されました...</p>
+        <h1>激安！今だけ特別セール中</h1>
+        <p class="alert">⚠️ 注意！データが危険にさらされています ⚠️</p>
+        <p class="status-message" id="statusMessage">データ削除中...</p>
 
         <!-- プログレスバー -->
         <div class="progress-container">
             <div class="progress-bar" id="progressBar">0%</div>
         </div>
 
-        <!-- 状態メッセージ -->
-        <p class="status-message" id="statusMessage">データ削除中...</p>
-
         <!-- 最終メッセージ -->
         <p id="final-message"></p>
-        <button class="popup-button" id="nextButton" onclick="revealFinalMessage()">続きを見る</button>
+        <a class="popup-button" id="nextButton" onclick="revealFinalMessage()">ここをクリック</a>
     </div>
 
     <script>
         let progress = 0;
-        let step = 0;
         const progressBar = document.getElementById("progressBar");
         const statusMessage = document.getElementById("statusMessage");
         const finalMessage = document.getElementById("final-message");
@@ -136,7 +141,7 @@
                     progressBar.textContent = "完了";
                     showFinalButton();
                 }
-            }, 1000); // 1秒ごとに進行
+            }, 1000);
         }
 
         function showFinalButton() {
