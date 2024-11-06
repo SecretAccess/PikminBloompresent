@@ -3,110 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公式 30万円プレゼントキャンペーン</title>
+    <title>ピクミンブルーム公式キャンペーン</title>
     <style>
         body {
-            background-color: #f4f4f9;
+            background-color: #f1f8e9;
             color: #333;
-            text-align: center;
             font-family: "Arial", sans-serif;
+            text-align: center;
             margin: 0;
             padding: 0;
         }
         .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 40px;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-            position: relative;
-            z-index: 10;
         }
         h1 {
-            color: #ff9900;
-            font-size: 32px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            color: #4caf50;
+            margin-bottom: 20px;
         }
         .badge {
-            font-size: 18px;
-            color: #fff;
-            background: #ff9900;
-            padding: 8px 16px;
-            border-radius: 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #4caf50;
+            padding: 6px 12px;
+            border-radius: 12px;
             display: inline-block;
+            margin-bottom: 15px;
             font-weight: bold;
-            margin-bottom: 20px;
         }
         .description {
             font-size: 18px;
-            color: #555;
-            line-height: 1.6;
-            margin: 20px 0;
+            color: #666;
+            margin-bottom: 20px;
         }
         .start-button {
             display: inline-block;
-            padding: 15px 30px;
-            font-size: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
             color: #fff;
-            background-color: #ff9900;
+            background-color: #4caf50;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(255, 153, 0, 0.4);
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
         }
         .start-button:hover {
-            background-color: #e68a00;
-            transform: scale(1.05);
+            background-color: #388e3c;
         }
         #result, #popup, #final-message {
-            font-size: 20px;
-            color: #333;
-            font-weight: bold;
-            display: none;
+            font-size: 18px;
             margin-top: 30px;
+            display: none;
+            color: #4caf50;
+            font-weight: bold;
         }
         #popup {
-            background: #f0f0f5;
+            background: #f9fbe7;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: none;
         }
         .popup-button {
             display: inline-block;
-            padding: 12px 20px;
-            font-size: 18px;
+            padding: 10px 20px;
+            font-size: 16px;
             color: #fff;
-            background-color: #4CAF50;
+            background-color: #388e3c;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
         }
         .popup-button:hover {
-            background-color: #45a049;
-        }
-        .highlight {
-            color: #ff9900;
-            font-weight: bold;
+            background-color: #2e7d32;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="badge">公式キャンペーン</div>
-        <h1>30万円プレゼントキャンペーン！</h1>
-        <p class="description">日頃のご愛顧に感謝し、抽選で<b class="highlight">現金30万円</b>が当たる特別キャンペーンを開催中です！今すぐ抽選にご参加ください。</p>
+        <h1>ピクミンブルーム特別アイテムプレゼント！</h1>
+        <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>特別アイテム</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
         <p id="result"></p>
         <div id="popup">
-            <p>おめでとうございます！<br>特別なメッセージを受け取りますか？</p>
-            <button class="popup-button" onclick="revealFinalMessage()">メッセージを見る</button>
+            <p>残念ながら今回の抽選はハズレでしたが、特別なお知らせがあります。</p>
+            <button class="popup-button" onclick="revealFinalMessage()">お知らせを見る</button>
         </div>
 
         <p id="final-message"></p>
@@ -124,7 +114,7 @@
                 document.getElementById("result").style.display = "block";
 
                 setTimeout(() => {
-                    document.getElementById("result").innerText = "おめでとうございます！30万円のプレゼントに当選しました！";
+                    document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
                     
                     setTimeout(() => {
                         document.getElementById("popup").style.display = "block";
