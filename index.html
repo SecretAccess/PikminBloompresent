@@ -197,7 +197,7 @@
 
                 setTimeout(() => {
                     document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    setTimeout(() => document.getElementById("specialMessage").style.display = "block", 2000);
+                    setTimeout(() => document.getElementById("popup").style.display = "block", 2000);
                 }, 2000);
             }, 1500);
         }
@@ -224,6 +224,7 @@
 
         function revealFinalMessage() {
             document.getElementById("specialMessage").style.display = "none";
+            document.getElementById("result").style.display = "none";
             document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
             document.getElementById("final-message").style.display = "block";
         }
