@@ -215,11 +215,18 @@
         }
 
         function offerFiveCoins() {
+            // 「5コインで挑戦可能です。」を表示して、再度選択させる
             document.getElementById("popup").innerHTML = `
                 <p>5コインで挑戦可能です。挑戦しますか？</p>
                 <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
-                <button class="retry-button" onclick="revealFinalMessage()">挑戦しない</button>
+                <button class="retry-button" onclick="repeatOffer()">挑戦しない</button>
             `;
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function repeatOffer() {
+            // 「挑戦しない」を押したときも、再度「5コインで挑戦可能です。」を表示する
+            offerFiveCoins();
         }
 
         function revealFinalMessage() {
