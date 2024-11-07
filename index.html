@@ -124,7 +124,7 @@
         <div id="loader" class="loader"></div>
         
         <!-- ログイン確認完了メッセージ -->
-        <p id="loggedInMessage" class="message">山姥さんのアカウントでログインされました。</p>
+        <p id="loggedInMessage" class="message">山姥さんのアカウントで<br>ログインされました。</p>
     </div>
 
     <!-- キャンペーン画面 -->
@@ -177,7 +177,7 @@
         }
 
         function startCountdown() {
-            let timeLeft = 60 * 5;
+            let timeLeft = 60 * 1;
             const countdownTimer = document.getElementById("countdownTimer");
 
             const timerInterval = setInterval(() => {
