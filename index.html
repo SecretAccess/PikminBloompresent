@@ -19,6 +19,21 @@
             flex-direction: column;
             align-items: center;
         }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明の白帯 */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+        .header img {
+            width: 150px;
+        }
         .container {
             max-width: 600px;
             padding: 20px;
@@ -26,7 +41,6 @@
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             margin-top: 120px; /* ヘッダー分の余白 */
-            margin-bottom: 60px; /* フッター分の余白 */
         }
         h1 {
             font-size: 32px;
@@ -106,20 +120,24 @@
             width: 100%;
             background-color: #ffffff;
             padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
             display: flex;
             justify-content: flex-end;
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
         }
         .footer img {
-            width: 80px; /* 画像を小さくする */
+            width: 80px;
             margin-right: 10px;
         }
     </style>
 </head>
 <body>
+    <!-- ヘッダー画像（上部中央） -->
+    <div class="header">
+        <img src="6b2fde44-84b6-4ac8-9744-fccba23e7db9.png" alt="イベントロゴ">
+    </div>
+    
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
         <h1>3周年アニバーサリー<br>ピクミンブルーム<br>大量コイン<br>プレゼント！</h1>
@@ -137,13 +155,43 @@
         <p id="loggedInMessage" class="message">山姥さんのアカウントで<br>ログインされました。</p>
     </div>
 
-    <!-- フッター -->
+    <!-- キャンペーン画面 -->
+    <div class="container" id="campaignScreen" style="display: none;">
+        <div class="badge">公式キャンペーン</div>
+        <h1>ピクミンブルーム<br>大量コイン<br>プレゼント！</h1>
+        
+        <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>3333コイン</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
+        
+        <!-- カウントダウンタイマー -->
+        <p class="countdown" id="countdown">抽選可能時間残り: <span id="countdownTimer"></span></p>
+        
+        <button class="start-button" onclick="startLottery()">抽選スタート</button>
+
+        <p id="result"></p>
+        <div id="popup">
+            <p>残念ながら今回の抽選はハズレでしたが、10コインを消費して再抽選が可能です。再抽選の当選確率は33%アップします。</p>
+            <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
+            <button class="retry-button" onclick="offerFiveCoins()">挑戦しない</button>
+        </div>
+
+        <div id="specialMessage">
+            <p>残念ながら今回の抽選はハズレでしたが、山姥さんだけの特別なお知らせがあります。</p>
+            <button class="popup-button" onclick="revealFinalMessage()">お知らせを見る</button>
+        </div>
+
+        <div id="final-message"></div>
+    </div>
+
+    <!-- フッター画像（右寄せ） -->
     <div class="footer">
-        <img src="2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png" alt="フッターロゴ">
+        <img src="2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png" alt="タイトルロゴ">
     </div>
 
     <script>
-        // JavaScript functions here (unchanged)
-    </script>
-</body>
-</html>
+        function startLogin() {
+            document.querySelector(".login-button").style.display = "none";
+            document.getElementById("loginMessage").style.display = "block";
+            
+            setTimeout(() => {
+                document.getElementById("loginMessage").style.display = "none";
+                document.getElementById("loader").style.display = "block
