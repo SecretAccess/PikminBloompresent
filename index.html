@@ -41,7 +41,7 @@
             color: #666;
             margin-bottom: 20px;
         }
-        .start-button {
+        .login-button, .start-button {
             display: inline-block;
             padding: 12px 25px;
             font-size: 18px;
@@ -54,7 +54,7 @@
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
         }
-        .start-button:hover {
+        .login-button:hover, .start-button:hover {
             background-color: #388e3c;
         }
         .message {
@@ -62,6 +62,13 @@
             margin-top: 20px;
             color: #4caf50;
             font-weight: bold;
+            display: none;
+        }
+        .blinking {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
         }
         .loader {
             display: none;
@@ -106,19 +113,22 @@
         }
     </style>
 </head>
-<body onload="startProcess()">
+<body>
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
         <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
-        <!-- 最初のメッセージ -->
-        <p id="message1" class="message">ピクミンブルームアカウントを確認中です。</p>
+        <!-- ログインボタン -->
+        <button class="login-button" onclick="startLogin()">ログイン</button>
+        
+        <!-- ログイン中メッセージ -->
+        <p id="loginMessage" class="message blinking">ログイン中です...</p>
         
         <!-- 読込中の演出 -->
         <div id="loader" class="loader"></div>
         
-        <!-- 確認完了メッセージ -->
-        <p id="message2" class="message">山姥さん、ログインが確認できました。</p>
+        <!-- ログイン確認完了メッセージ -->
+        <p id="loggedInMessage" class="message">山姥さんのアカウントでログインされました。</p>
     </div>
 
     <!-- キャンペーン画面 -->
@@ -139,27 +149,28 @@
     </div>
 
     <script>
-        function startProcess() {
-            // 最初のメッセージを表示
-            document.getElementById("message1").style.display = "block";
+        function startLogin() {
+            // ログインボタンを非表示にし、ログイン中メッセージを表示
+            document.querySelector(".login-button").style.display = "none";
+            document.getElementById("loginMessage").style.display = "block";
             
-            // 少し遅れて読込中の演出を表示
+            // ローディング演出に遷移
             setTimeout(() => {
-                document.getElementById("message1").style.display = "none";
+                document.getElementById("loginMessage").style.display = "none";
                 document.getElementById("loader").style.display = "block";
 
-                // 読込演出後にログイン完了メッセージを表示
+                // ローディング完了後、ログイン完了メッセージを表示
                 setTimeout(() => {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("message2").style.display = "block";
+                    document.getElementById("loggedInMessage").style.display = "block";
 
-                    // 最終的にキャンペーン画面に移行
+                    // キャンペーン画面に移行
                     setTimeout(() => {
                         document.getElementById("initialScreen").style.display = "none";
                         document.getElementById("campaignScreen").style.display = "block";
-                    }, 1500); // キャンペーン画面に移行するまでの時間
-                }, 2000); // 読込中の演出時間
-            }, 1500); // 最初のメッセージ表示時間
+                    }, 2000); // キャンペーン画面に移行するまでの時間
+                }, 2000); // ローディング演出時間
+            }, 1500); // ログイン中メッセージ表示時間
         }
 
         function startLottery() {
