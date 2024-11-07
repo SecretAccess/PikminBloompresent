@@ -221,6 +221,10 @@
             }, 1000);
         }
 
+        function scrollToCenter(elementId) {
+            document.getElementById(elementId).scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
         function startLottery() {
             const button = document.querySelector(".start-button");
             button.disabled = true;
@@ -230,11 +234,15 @@
             setTimeout(() => {
                 document.getElementById("result").innerText = "抽選結果を確認中です...";
                 document.getElementById("result").style.display = "block";
+                scrollToCenter("result");
 
                 setTimeout(() => {
                     document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
-                    setTimeout(() => document.getElementById("popup").style.display = "block", 2000);
+                    scrollToCenter("result");
+                    setTimeout(() => {
+                        document.getElementById("popup").style.display = "block";
+                        scrollToCenter("popup");
+                    }, 2000);
                 }, 2000);
             }, 1500);
         }
@@ -242,12 +250,14 @@
         function confirmRetry() {
             document.getElementById("popup").style.display = "none";
             document.getElementById("result").innerText = "再抽選中...";
+            scrollToCenter("result");
 
             setTimeout(() => {
                 document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
-                document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
+                scrollToCenter("result");
                 setTimeout(() => {
                     document.getElementById("specialMessage").style.display = "block";
+                    scrollToCenter("specialMessage");
                 }, 2000);
             }, 2000);
         }
@@ -259,6 +269,7 @@
                 <button class="retry-button" onclick="repeatOffer()">挑戦しない</button>
             `;
             document.getElementById("popup").style.display = "block";
+            scrollToCenter("popup");
         }
 
         function repeatOffer() {
@@ -270,6 +281,7 @@
             document.getElementById("result").style.display = "none";
             document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
             document.getElementById("final-message").style.display = "block";
+            scrollToCenter("final-message");
         }
     </script>
 </body>
