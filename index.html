@@ -112,7 +112,7 @@
 <body>
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
-        <h1>3周年アニバーサリー<br>ピクミンブルーム<br>特別アイテム<br>プレゼント！</h1>
+        <h1>3周年アニバーサリー<br>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
         <!-- ログインボタン -->
         <button class="login-button" onclick="startLogin()">ログイン</button>
@@ -130,7 +130,7 @@
     <!-- キャンペーン画面 -->
     <div class="container" id="campaignScreen" style="display: none;">
         <div class="badge">公式キャンペーン</div>
-        <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
+        <h1>ピクミンブルーム<br>大量コイン<br>プレゼント！</h1>
         
         <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>3333コイン</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         
@@ -177,7 +177,7 @@
         }
 
         function startCountdown() {
-            let timeLeft = 60 * 1;
+            let timeLeft = 60 * 5;
             const countdownTimer = document.getElementById("countdownTimer");
 
             const timerInterval = setInterval(() => {
@@ -206,6 +206,7 @@
 
                 setTimeout(() => {
                     document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
+                    document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
                     setTimeout(() => document.getElementById("popup").style.display = "block", 2000);
                 }, 2000);
             }, 1500);
@@ -217,6 +218,7 @@
 
             setTimeout(() => {
                 document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
+                document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
                 setTimeout(() => {
                     document.getElementById("specialMessage").style.display = "block";
                 }, 2000);
