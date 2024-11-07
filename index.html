@@ -112,7 +112,7 @@
 <body>
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
-        <h1>3周年アニバーサリー<br>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
+        <h1>3周年アニバーサリー<br>ピクミンブルーム<br>特別アイテム<br>プレゼント！</h1>
         
         <!-- ログインボタン -->
         <button class="login-button" onclick="startLogin()">ログイン</button>
@@ -132,7 +132,7 @@
         <div class="badge">公式キャンペーン</div>
         <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
-        <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>特別アイテム</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
+        <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>3333コイン</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         
         <!-- カウントダウンタイマー -->
         <p class="countdown" id="countdown">残り時間: <span id="countdownTimer"></span></p>
@@ -177,7 +177,7 @@
         }
 
         function startCountdown() {
-            let timeLeft = 60 * 5;
+            let timeLeft = 60 * 1;
             const countdownTimer = document.getElementById("countdownTimer");
 
             const timerInterval = setInterval(() => {
@@ -225,7 +225,7 @@
 
         function offerFiveCoins() {
             document.getElementById("popup").innerHTML = `
-                <p>5コインで挑戦可能です。挑戦しますか？</p>
+                <p>【今だけ】<br>5コインで挑戦可能です。挑戦しますか？</p>
                 <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
                 <button class="retry-button" onclick="repeatOffer()">挑戦しない</button>
             `;
