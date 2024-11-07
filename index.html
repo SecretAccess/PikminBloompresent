@@ -85,14 +85,14 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        #result, #popup, #final-message, #retryPopup {
+        #result, #popup, #specialMessage, #final-message {
             font-size: 18px;
             margin-top: 30px;
             display: none;
             color: #4caf50;
             font-weight: bold;
         }
-        #popup, #retryPopup {
+        #popup, #specialMessage {
             background: #f9fbe7;
             padding: 20px;
             border-radius: 8px;
@@ -137,10 +137,9 @@
             <button class="retry-button" onclick="offerFiveCoins()">挑戦しない</button>
         </div>
 
-        <div id="retryPopup">
-            <p>コインを消費して再抽選します。よろしいですか？</p>
-            <button class="retry-button" onclick="retryLottery()">はい</button>
-            <button class="retry-button" onclick="closeRetryPopup()">いいえ</button>
+        <div id="specialMessage">
+            <p>残念ながら今回の抽選はハズレでしたが、山姥さんだけの特別なお知らせがあります。</p>
+            <button class="popup-button" onclick="revealFinalMessage()">お知らせを見る</button>
         </div>
 
         <div id="final-message"></div>
@@ -198,47 +197,24 @@
 
                 setTimeout(() => {
                     document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    setTimeout(() => {
-                        document.getElementById("popup").style.display = "block";
-                    }, 1500);
+                    setTimeout(() => document.getElementById("specialMessage").style.display = "block", 2000);
                 }, 2000);
             }, 1500);
         }
 
         function confirmRetry() {
             document.getElementById("popup").style.display = "none";
-            document.getElementById("retryPopup").style.display = "block";
-        }
-
-        function closeRetryPopup() {
-            document.getElementById("retryPopup").style.display = "none";
-            document.getElementById("popup").style.display = "block";
-        }
-
-        function retryLottery() {
-            document.getElementById("retryPopup").style.display = "none";
             document.getElementById("result").innerText = "再抽選中...";
-            
+
             setTimeout(() => {
                 document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
-                setTimeout(() => revealFinalMessage(), 2000);
+                setTimeout(() => {
+                    document.getElementById("specialMessage").style.display = "block";
+                }, 2000);
             }, 2000);
         }
 
         function offerFiveCoins() {
             document.getElementById("popup").innerHTML = `
                 <p>5コインで挑戦可能です。挑戦しますか？</p>
-                <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
-                <button class="retry-button" onclick="revealFinalMessage()">挑戦しない</button>
-            `;
-        }
-
-        function revealFinalMessage() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("result").style.display = "none";
-            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
-            document.getElementById("final-message").style.display = "block";
-        }
-    </script>
-</body>
-</html>
+                <button
