@@ -13,11 +13,11 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 80px; /* フッターの分だけ余白を確保 */
         }
         .top-image {
             width: 100%;
@@ -73,43 +73,6 @@
             display: none;
             text-shadow: 1px 1px 4px rgba(56, 142, 60, 0.3);
         }
-        .blinking {
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-        .loader {
-            display: none;
-            margin: 20px auto;
-            border: 6px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 6px solid #388e3c;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #result, #popup, #specialMessage, #final-message {
-            font-size: 20px;
-            margin-top: 30px;
-            display: none;
-            color: #388e3c;
-            font-weight: bold;
-        }
-        #popup, #specialMessage {
-            background: #e8f5e9;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .countdown span {
-            font-weight: bold;
-            color: #d32f2f;
-        }
         .footer {
             width: 100%;
             background-color: #ffffff;
@@ -156,9 +119,6 @@
         
         <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>3333コイン</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         
-        <!-- カウントダウンタイマー -->
-        <p class="countdown" id="countdown">抽選可能時間残り: <span id="countdownTimer"></span></p>
-        
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
         <p id="result"></p>
@@ -197,91 +157,34 @@
                     setTimeout(() => {
                         document.getElementById("initialScreen").style.display = "none";
                         document.getElementById("campaignScreen").style.display = "block";
-                        startCountdown();
                     }, 2000);
                 }, 2000);
             }, 1500);
         }
 
-        function startCountdown() {
-            let timeLeft = 60 * 1;
-            const countdownTimer = document.getElementById("countdownTimer");
+        function calculatePregnancyInfo() {
+            const startDate = new Date("2024-09-16");
+            const dueDate = new Date("2025-06-11");
+            const today = new Date();
 
-            const timerInterval = setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                countdownTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                
-                timeLeft--;
+            // 妊娠月数を計算
+            const diffInMonths = Math.floor((today - startDate) / (1000 * 60 * 60 * 24 * 30.44)); // 約1ヶ月 = 30.44日
+            const monthsText = `現在妊娠${diffInMonths}か月！`;
 
-                if (timeLeft < 0) {
-                    clearInterval(timerInterval);
-                    countdownTimer.textContent = "終了しました";
-                }
-            }, 1000);
-        }
+            // 予定日までの日数を計算
+            const daysUntilDueDate = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+            const daysText = `予定日まで${daysUntilDueDate}日！`;
 
-        function scrollToCenter(elementId) {
-            document.getElementById(elementId).scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-
-        function startLottery() {
-            const button = document.querySelector(".start-button");
-            button.disabled = true;
-            button.style.backgroundColor = "#ccc";
-            button.innerText = "抽選中...";
-
-            setTimeout(() => {
-                document.getElementById("result").innerText = "抽選結果を確認中です...";
-                document.getElementById("result").style.display = "block";
-                scrollToCenter("result");
-
-                setTimeout(() => {
-                    document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    scrollToCenter("result");
-                    setTimeout(() => {
-                        document.getElementById("popup").style.display = "block";
-                        scrollToCenter("popup");
-                    }, 2000);
-                }, 2000);
-            }, 1500);
-        }
-
-        function confirmRetry() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("result").innerText = "再抽選中...";
-            scrollToCenter("result");
-
-            setTimeout(() => {
-                document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
-                scrollToCenter("result");
-                setTimeout(() => {
-                    document.getElementById("specialMessage").style.display = "block";
-                    scrollToCenter("specialMessage");
-                }, 2000);
-            }, 2000);
-        }
-
-        function offerFiveCoins() {
-            document.getElementById("popup").innerHTML = `
-                <p>【今だけ】<br>5コインで挑戦可能です。挑戦しますか？</p>
-                <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
-                <button class="retry-button" onclick="repeatOffer()">挑戦しない</button>
-            `;
-            document.getElementById("popup").style.display = "block";
-            scrollToCenter("popup");
-        }
-
-        function repeatOffer() {
-            offerFiveCoins();
+            return `${monthsText}\n${daysText}`;
         }
 
         function revealFinalMessage() {
+            const pregnancyInfo = calculatePregnancyInfo();
             document.getElementById("specialMessage").style.display = "none";
             document.getElementById("result").style.display = "none";
-            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
+            document.getElementById("final-message").innerText = `実は…2025年6月に、\n莉緒がお姉さんになります！\n\n${pregnancyInfo}`;
             document.getElementById("final-message").style.display = "block";
-            scrollToCenter("final-message");
+            document.getElementById("final-message").scrollIntoView({ behavior: "smooth", block: "center" });
         }
     </script>
 </body>
