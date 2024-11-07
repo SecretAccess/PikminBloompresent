@@ -13,10 +13,15 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .container {
             max-width: 600px;
-            margin: 50px auto;
             padding: 20px;
             background: #ffffff;
             border-radius: 16px;
@@ -107,9 +112,21 @@
             font-weight: bold;
             color: #d32f2f;
         }
+        .event-logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .footer-logo {
+            width: 120px;
+            position: fixed;
+            bottom: 10px;
+        }
     </style>
 </head>
 <body>
+    <!-- イベントロゴ（上部） -->
+    <img src="6b2fde44-84b6-4ac8-9744-fccba23e7db9.png" alt="イベントロゴ" class="event-logo">
+    
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
         <h1>3周年アニバーサリー<br>ピクミンブルーム<br>大量コイン<br>プレゼント！</h1>
@@ -153,6 +170,9 @@
 
         <div id="final-message"></div>
     </div>
+
+    <!-- フッターロゴ（最下部） -->
+    <img src="2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png" alt="フッターロゴ" class="footer-logo">
 
     <script>
         function startLogin() {
