@@ -217,4 +217,16 @@
         function offerFiveCoins() {
             document.getElementById("popup").innerHTML = `
                 <p>5コインで挑戦可能です。挑戦しますか？</p>
-                <button
+                <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
+                <button class="retry-button" onclick="revealFinalMessage()">挑戦しない</button>
+            `;
+        }
+
+        function revealFinalMessage() {
+            document.getElementById("specialMessage").style.display = "none";
+            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
+            document.getElementById("final-message").style.display = "block";
+        }
+    </script>
+</body>
+</html>
