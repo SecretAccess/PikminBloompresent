@@ -6,64 +6,69 @@
     <title>3周年アニバーサリー　ピクミンブルーム　特別アイテムプレゼント！</title>
     <style>
         body {
-            background-color: #f1f8e9;
+            background: linear-gradient(135deg, #e8f5e9, #a5d6a7);
             color: #333;
             font-family: "Arial", sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
+            line-height: 1.6;
         }
         .container {
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
         .badge {
-            font-size: 16px;
+            font-size: 18px;
             color: #ffffff;
-            background-color: #4caf50;
-            padding: 6px 12px;
-            border-radius: 12px;
+            background: #66bb6a;
+            padding: 8px 16px;
+            border-radius: 20px;
             display: inline-block;
             margin-bottom: 15px;
             font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(102, 187, 106, 0.5);
         }
         h1 {
-            font-size: 28px;
-            color: #4caf50;
+            font-size: 32px;
+            color: #388e3c;
             margin-bottom: 20px;
+            text-shadow: 1px 1px 4px rgba(56, 142, 60, 0.5);
         }
         .description, .countdown {
-            font-size: 18px;
-            color: #666;
+            font-size: 20px;
+            color: #555;
             margin-bottom: 20px;
         }
         .login-button, .start-button, .popup-button, .retry-button {
             display: inline-block;
-            padding: 12px 25px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #4caf50;
+            padding: 14px 30px;
+            font-size: 20px;
+            color: #ffffff;
+            background-color: #388e3c;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+            box-shadow: 0 6px 12px rgba(56, 142, 60, 0.4);
+            transition: background-color 0.3s ease, transform 0.1s ease;
             margin: 5px;
         }
         .login-button:hover, .start-button:hover, .popup-button:hover, .retry-button:hover {
-            background-color: #388e3c;
+            background-color: #2e7d32;
+            transform: translateY(-2px);
         }
         .message {
-            font-size: 18px;
+            font-size: 20px;
             margin-top: 20px;
-            color: #4caf50;
+            color: #388e3c;
             font-weight: bold;
             display: none;
+            text-shadow: 1px 1px 4px rgba(56, 142, 60, 0.3);
         }
         .blinking {
             animation: blink 1s step-end infinite;
@@ -76,7 +81,7 @@
             margin: 20px auto;
             border: 6px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 6px solid #4caf50;
+            border-top: 6px solid #388e3c;
             width: 50px;
             height: 50px;
             animation: spin 1s linear infinite;
@@ -86,17 +91,21 @@
             100% { transform: rotate(360deg); }
         }
         #result, #popup, #specialMessage, #final-message {
-            font-size: 18px;
+            font-size: 20px;
             margin-top: 30px;
             display: none;
-            color: #4caf50;
+            color: #388e3c;
             font-weight: bold;
         }
         #popup, #specialMessage {
-            background: #f9fbe7;
+            background: #e8f5e9;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .countdown span {
+            font-weight: bold;
+            color: #d32f2f;
         }
     </style>
 </head>
@@ -215,7 +224,6 @@
         }
 
         function offerFiveCoins() {
-            // 「5コインで挑戦可能です。」を表示して、再度選択させる
             document.getElementById("popup").innerHTML = `
                 <p>5コインで挑戦可能です。挑戦しますか？</p>
                 <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
@@ -225,7 +233,6 @@
         }
 
         function repeatOffer() {
-            // 「挑戦しない」を押したときも、再度「5コインで挑戦可能です。」を表示する
             offerFiveCoins();
         }
 
