@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ピクミンブルーム／特別アイテムプレゼント！</title>
+    <title>3周年アニバーサリー　ピクミンブルーム　特別アイテムプレゼント！</title>
     <style>
         body {
             background-color: #f1f8e9;
@@ -41,7 +41,7 @@
             color: #666;
             margin-bottom: 20px;
         }
-        .login-button, .start-button {
+        .login-button, .start-button, .popup-button, .retry-button {
             display: inline-block;
             padding: 12px 25px;
             font-size: 18px;
@@ -53,8 +53,9 @@
             transition: background-color 0.3s ease;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+            margin: 5px;
         }
-        .login-button:hover, .start-button:hover {
+        .login-button:hover, .start-button:hover, .popup-button:hover, .retry-button:hover {
             background-color: #388e3c;
         }
         .message {
@@ -84,39 +85,25 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        #result, #popup, #final-message {
+        #result, #popup, #final-message, #retryPopup {
             font-size: 18px;
             margin-top: 30px;
             display: none;
             color: #4caf50;
             font-weight: bold;
         }
-        #popup {
+        #popup, #retryPopup {
             background: #f9fbe7;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .popup-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #388e3c;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .popup-button:hover {
-            background-color: #2e7d32;
         }
     </style>
 </head>
 <body>
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
-        <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
+        <h1>3周年アニバーサリー<br>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
         <!-- ログインボタン -->
         <button class="login-button" onclick="startLogin()">ログイン</button>
@@ -145,11 +132,18 @@
 
         <p id="result"></p>
         <div id="popup">
-            <p>残念ながら今回の抽選はハズレでしたが、山姥さんだけの特別なお知らせがあります。</p>
-            <button class="popup-button" onclick="revealFinalMessage()">お知らせを見る</button>
+            <p>残念ながら今回の抽選はハズレでしたが、10コインを消費して再抽選が可能です。再抽選の当選確率は33%アップします。</p>
+            <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
+            <button class="retry-button" onclick="offerFiveCoins()">挑戦しない</button>
         </div>
 
-        <p id="final-message"></p>
+        <div id="retryPopup">
+            <p>コインを消費して再抽選します。よろしいですか？</p>
+            <button class="retry-button" onclick="retryLottery()">はい</button>
+            <button class="retry-button" onclick="closeRetryPopup()">いいえ</button>
+        </div>
+
+        <div id="final-message"></div>
     </div>
 
     <script>
@@ -175,7 +169,7 @@
         }
 
         function startCountdown() {
-            let timeLeft = 60 * 5; // 5 minutes countdown
+            let timeLeft = 60 * 5;
             const countdownTimer = document.getElementById("countdownTimer");
 
             const timerInterval = setInterval(() => {
@@ -204,7 +198,6 @@
 
                 setTimeout(() => {
                     document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    
                     setTimeout(() => {
                         document.getElementById("popup").style.display = "block";
                     }, 1500);
@@ -212,8 +205,37 @@
             }, 1500);
         }
 
+        function confirmRetry() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("retryPopup").style.display = "block";
+        }
+
+        function closeRetryPopup() {
+            document.getElementById("retryPopup").style.display = "none";
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function retryLottery() {
+            document.getElementById("retryPopup").style.display = "none";
+            document.getElementById("result").innerText = "再抽選中...";
+            
+            setTimeout(() => {
+                document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
+                setTimeout(() => revealFinalMessage(), 2000);
+            }, 2000);
+        }
+
+        function offerFiveCoins() {
+            document.getElementById("popup").innerHTML = `
+                <p>5コインで挑戦可能です。挑戦しますか？</p>
+                <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
+                <button class="retry-button" onclick="revealFinalMessage()">挑戦しない</button>
+            `;
+        }
+
         function revealFinalMessage() {
             document.getElementById("popup").style.display = "none";
+            document.getElementById("result").style.display = "none";
             document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
             document.getElementById("final-message").style.display = "block";
         }
