@@ -36,7 +36,7 @@
             color: #4caf50;
             margin-bottom: 20px;
         }
-        .description {
+        .description, .countdown {
             font-size: 18px;
             color: #666;
             margin-bottom: 20px;
@@ -137,6 +137,10 @@
         <h1>ピクミンブルーム<br>特別アイテムプレゼント！</h1>
         
         <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>特別アイテム</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
+        
+        <!-- カウントダウンタイマー -->
+        <p class="countdown" id="countdown">残り時間: <span id="countdownTimer"></span></p>
+        
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
         <p id="result"></p>
@@ -150,27 +154,42 @@
 
     <script>
         function startLogin() {
-            // ログインボタンを非表示にし、ログイン中メッセージを表示
             document.querySelector(".login-button").style.display = "none";
             document.getElementById("loginMessage").style.display = "block";
             
-            // ローディング演出に遷移
             setTimeout(() => {
                 document.getElementById("loginMessage").style.display = "none";
                 document.getElementById("loader").style.display = "block";
 
-                // ローディング完了後、ログイン完了メッセージを表示
                 setTimeout(() => {
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loggedInMessage").style.display = "block";
 
-                    // キャンペーン画面に移行
                     setTimeout(() => {
                         document.getElementById("initialScreen").style.display = "none";
                         document.getElementById("campaignScreen").style.display = "block";
-                    }, 2000); // キャンペーン画面に移行するまでの時間
-                }, 2000); // ローディング演出時間
-            }, 1500); // ログイン中メッセージ表示時間
+                        startCountdown();
+                    }, 2000);
+                }, 2000);
+            }, 1500);
+        }
+
+        function startCountdown() {
+            let timeLeft = 60 * 5; // 5 minutes countdown
+            const countdownTimer = document.getElementById("countdownTimer");
+
+            const timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    countdownTimer.textContent = "終了しました";
+                }
+            }, 1000);
         }
 
         function startLottery() {
@@ -188,7 +207,7 @@
                     
                     setTimeout(() => {
                         document.getElementById("popup").style.display = "block";
-                    }, 1500); // ポップアップ表示
+                    }, 1500);
                 }, 2000);
             }, 1500);
         }
