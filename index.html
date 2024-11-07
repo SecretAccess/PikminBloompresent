@@ -19,19 +19,13 @@
             flex-direction: column;
             align-items: center;
         }
-        .header {
+        .top-image {
             width: 100%;
-            display: flex;
-            justify-content: center;
             padding: 20px 0;
-            background-color: rgba(255, 255, 255, 0.8); /* 半透明の白帯 */
+            background-color: rgba(255, 255, 255, 0.8);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 10;
         }
-        .header img {
+        .top-image img {
             width: 150px;
         }
         .container {
@@ -40,7 +34,7 @@
             background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            margin-top: 120px; /* ヘッダー分の余白 */
+            margin-top: 20px;
         }
         h1 {
             font-size: 32px;
@@ -133,8 +127,8 @@
     </style>
 </head>
 <body>
-    <!-- ヘッダー画像（上部中央） -->
-    <div class="header">
+    <!-- 上部画像 -->
+    <div class="top-image">
         <img src="6b2fde44-84b6-4ac8-9744-fccba23e7db9.png" alt="イベントロゴ">
     </div>
     
@@ -194,4 +188,89 @@
             
             setTimeout(() => {
                 document.getElementById("loginMessage").style.display = "none";
-                document.getElementById("loader").style.display = "block
+                document.getElementById("loader").style.display = "block";
+
+                setTimeout(() => {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("loggedInMessage").style.display = "block";
+
+                    setTimeout(() => {
+                        document.getElementById("initialScreen").style.display = "none";
+                        document.getElementById("campaignScreen").style.display = "block";
+                        startCountdown();
+                    }, 2000);
+                }, 2000);
+            }, 1500);
+        }
+
+        function startCountdown() {
+            let timeLeft = 60 * 1;
+            const countdownTimer = document.getElementById("countdownTimer");
+
+            const timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    countdownTimer.textContent = "終了しました";
+                }
+            }, 1000);
+        }
+
+        function startLottery() {
+            const button = document.querySelector(".start-button");
+            button.disabled = true;
+            button.style.backgroundColor = "#ccc";
+            button.innerText = "抽選中...";
+
+            setTimeout(() => {
+                document.getElementById("result").innerText = "抽選結果を確認中です...";
+                document.getElementById("result").style.display = "block";
+
+                setTimeout(() => {
+                    document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
+                    document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
+                    setTimeout(() => document.getElementById("popup").style.display = "block", 2000);
+                }, 2000);
+            }, 1500);
+        }
+
+        function confirmRetry() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("result").innerText = "再抽選中...";
+
+            setTimeout(() => {
+                document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
+                document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
+                setTimeout(() => {
+                    document.getElementById("specialMessage").style.display = "block";
+                }, 2000);
+            }, 2000);
+        }
+
+        function offerFiveCoins() {
+            document.getElementById("popup").innerHTML = `
+                <p>【今だけ】<br>5コインで挑戦可能です。挑戦しますか？</p>
+                <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
+                <button class="retry-button" onclick="repeatOffer()">挑戦しない</button>
+            `;
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function repeatOffer() {
+            offerFiveCoins();
+        }
+
+        function revealFinalMessage() {
+            document.getElementById("specialMessage").style.display = "none";
+            document.getElementById("result").style.display = "none";
+            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
+            document.getElementById("final-message").style.display = "block";
+        }
+    </script>
+</body>
+</html>
