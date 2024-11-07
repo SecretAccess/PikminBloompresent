@@ -17,8 +17,18 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+        }
+        .header {
+            width: 100%;
+            background: url('2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png') center/contain no-repeat;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明の白帯 */
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
         }
         .container {
             max-width: 600px;
@@ -26,17 +36,7 @@
             background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-        .badge {
-            font-size: 18px;
-            color: #ffffff;
-            background: #66bb6a;
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 15px;
-            font-weight: bold;
-            box-shadow: 0px 4px 10px rgba(102, 187, 106, 0.5);
+            margin-top: 120px; /* ヘッダー分の余白 */
         }
         h1 {
             font-size: 32px;
@@ -114,18 +114,15 @@
         }
         .event-logo {
             width: 150px;
-            margin-bottom: 20px;
-        }
-        .footer-logo {
-            width: 120px;
-            position: fixed;
-            bottom: 10px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- イベントロゴ（上部） -->
-    <img src="6b2fde44-84b6-4ac8-9744-fccba23e7db9.png" alt="イベントロゴ" class="event-logo">
+    <!-- ヘッダー -->
+    <div class="header">
+        <img src="2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png" alt="タイトルロゴ" class="event-logo">
+    </div>
     
     <!-- 初期画面 -->
     <div class="container" id="initialScreen">
@@ -170,9 +167,6 @@
 
         <div id="final-message"></div>
     </div>
-
-    <!-- フッターロゴ（最下部） -->
-    <img src="2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png" alt="フッターロゴ" class="footer-logo">
 
     <script>
         function startLogin() {
