@@ -162,7 +162,7 @@
         <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>1225コイン</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         
         <!-- 参加者数表示 -->
-        <p class="participants">現在の参加者数: <span id="participantCount">0</span>人</p>
+        <p class="participants">現在の参加者数: <span id="participantCount">35,160</span>人</p>
         
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
@@ -212,18 +212,22 @@
         // 参加者数カウント機能
         function startParticipantCount() {
             const participantCountElement = document.getElementById("participantCount");
-            let participantCount = 0;
-            const totalIncrease = 200; // 10秒で増加させたい総人数
-            const increment = 7; // 一度に増加させる人数
+            let participantCount = 35160; // 初期値
+            const maxIncrease = 200; // 増加させたい総人数
             const intervalTime = 350; // インターバル時間（ミリ秒）
-            const steps = Math.ceil(totalIncrease / increment); // 増加ステップ数
+            const maxSteps = Math.ceil(maxIncrease / 6); // 最小増加数6で計算
 
             const interval = setInterval(() => {
+                // 6～10のランダムな増加数を生成
+                const increment = Math.floor(Math.random() * 5) + 6; // 6,7,8,9,10
                 participantCount += increment;
-                if (participantCount >= totalIncrease) {
-                    participantCount = totalIncrease;
+
+                // 最大増加数を超えないように調整
+                if (participantCount >= 35360) { // 35160 + 200
+                    participantCount = 35360;
                     clearInterval(interval);
                 }
+
                 participantCountElement.textContent = participantCount.toLocaleString();
             }, intervalTime);
         }
