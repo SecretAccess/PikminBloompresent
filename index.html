@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>クリスマス記念　ピクミンブルーム　特別アイテムプレゼント！</title>
+    <!-- Google Fontsの導入 -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* 全体のスタイル */
         body {
             background: linear-gradient(135deg, #e8f5e9, #a5d6a7);
             color: #333;
-            font-family: "Arial", sans-serif;
+            font-family: 'Press Start 2P', cursive;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -18,16 +21,39 @@
             flex-direction: column;
             align-items: center;
             padding-bottom: 80px; /* フッターの分だけ余白を確保 */
+            position: relative;
+            overflow: hidden;
         }
+
+        /* 背景の雪のアニメーション */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            user-select: none;
+            font-size: 1em;
+            z-index: 1000;
+            animation: snow 10s linear infinite;
+        }
+
+        @keyframes snow {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0.5; }
+        }
+
+        /* 上部画像のスタイル */
         .top-image {
             width: 100%;
             padding: 20px 0;
             background-color: rgba(255, 255, 255, 0.8);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .top-image img {
             width: 150px;
         }
+
+        /* コンテナのスタイル */
         .container {
             max-width: 600px;
             padding: 20px;
@@ -35,22 +61,31 @@
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             margin-top: 20px;
+            position: relative;
+            z-index: 10;
         }
+
+        /* 見出しのスタイル */
         h1 {
-            font-size: 32px;
+            font-size: 18px; /* フォントが大きすぎるため調整 */
             color: #388e3c;
             margin-bottom: 20px;
             text-shadow: 1px 1px 4px rgba(56, 142, 60, 0.5);
+            line-height: 1.2;
         }
-        .description, .countdown, .participants {
-            font-size: 20px;
+
+        /* 説明文と参加者数のスタイル */
+        .description, .participants {
+            font-size: 12px; /* フォントが大きすぎるため調整 */
             color: #555;
             margin-bottom: 20px;
         }
+
+        /* ボタンのスタイル */
         .login-button, .start-button, .popup-button, .retry-button {
             display: inline-block;
-            padding: 14px 30px;
-            font-size: 20px;
+            padding: 10px 20px;
+            font-size: 10px;
             color: #ffffff;
             background-color: #388e3c;
             border: none;
@@ -65,8 +100,10 @@
             background-color: #2e7d32;
             transform: translateY(-2px);
         }
+
+        /* メッセージのスタイル */
         .message {
-            font-size: 20px;
+            font-size: 12px;
             margin-top: 20px;
             color: #388e3c;
             font-weight: bold;
@@ -79,6 +116,8 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+
+        /* ローダーのスタイル */
         .loader {
             display: none;
             margin: 20px auto;
@@ -93,8 +132,10 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* 結果やポップアップメッセージのスタイル */
         #result, #popup, #specialMessage, #final-message {
-            font-size: 20px;
+            font-size: 12px;
             margin-top: 30px;
             display: none;
             color: #388e3c;
@@ -106,10 +147,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .countdown span {
-            font-weight: bold;
-            color: #d32f2f;
-        }
+
+        /* フッターのスタイル */
         .footer {
             width: 100%;
             background-color: #ffffff;
@@ -119,19 +158,49 @@
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
             position: fixed;
             bottom: 0;
+            z-index: 10;
         }
         .footer img {
             width: 80px;
             margin-right: 10px;
         }
+
+        /* 参加者数のスタイル */
         .participants {
-            font-size: 20px;
+            font-size: 12px;
             color: #555;
             margin-bottom: 20px;
+        }
+
+        /* メディアクエリでレスポンシブデザインを強化 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 14px;
+            }
+            .description, .participants {
+                font-size: 10px;
+            }
+            .login-button, .start-button, .popup-button, .retry-button {
+                padding: 8px 16px;
+                font-size: 8px;
+            }
+            #final-message {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 背景の雪のアニメーション -->
+    <div class="snowflake" style="left: 10%;">❄️</div>
+    <div class="snowflake" style="left: 30%;">❄️</div>
+    <div class="snowflake" style="left: 50%;">❄️</div>
+    <div class="snowflake" style="left: 70%;">❄️</div>
+    <div class="snowflake" style="left: 90%;">❄️</div>
+
     <!-- 上部画像 -->
     <div class="top-image">
         <img src="pikminxmas.png" alt="イベントロゴ">
@@ -164,20 +233,26 @@
         <!-- 参加者数表示 -->
         <p class="participants">現在の参加者数: <span id="participantCount">35,160</span>人</p>
         
+        <!-- 抽選スタートボタン -->
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
+        <!-- 抽選結果表示 -->
         <p id="result"></p>
+
+        <!-- ポップアップメッセージ -->
         <div id="popup">
             <p>残念ながら今回の抽選はハズレでしたが、10コインを消費して再抽選が可能です。再抽選の当選確率は33%アップします。</p>
             <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
             <button class="retry-button" onclick="offerFiveCoins()">挑戦しない</button>
         </div>
 
+        <!-- 特別メッセージ -->
         <div id="specialMessage">
             <p>残念ながら今回の抽選はハズレでしたが、kikiさんだけの特別なお知らせがあります。</p>
             <button class="popup-button" onclick="revealFinalMessage()">お知らせを見る</button>
         </div>
 
+        <!-- 最終メッセージ -->
         <div id="final-message"></div>
     </div>
 
@@ -186,19 +261,27 @@
         <img src="2ff87f99-58f5-49c9-8b77-1275bb7b6dea.png" alt="タイトルロゴ">
     </div>
 
+    <!-- サウンドエフェクト -->
+    <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+    <audio id="winSound" src="win.mp3" preload="auto"></audio>
+    <audio id="loseSound" src="lose.mp3" preload="auto"></audio>
+
     <script>
         // ログイン処理
         function startLogin() {
+            playSound('clickSound');
             document.querySelector(".login-button").style.display = "none";
             document.getElementById("loginMessage").style.display = "block";
             
             setTimeout(() => {
                 document.getElementById("loginMessage").style.display = "none";
                 document.getElementById("loader").style.display = "block";
+                playSound('clickSound');
 
                 setTimeout(() => {
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loggedInMessage").style.display = "block";
+                    playSound('clickSound');
 
                     setTimeout(() => {
                         document.getElementById("initialScreen").style.display = "none";
@@ -213,9 +296,8 @@
         function startParticipantCount() {
             const participantCountElement = document.getElementById("participantCount");
             let participantCount = 35160; // 初期値
-            const maxIncrease = 10000; // 増加させたい総人数
+            const maxIncrease = 4880; // 35,160から4,840人増加して40,000にする
             const intervalTime = 350; // インターバル時間（ミリ秒）
-            const maxSteps = Math.ceil(maxIncrease / 6); // 最小増加数6で計算
 
             const interval = setInterval(() => {
                 // 6～10のランダムな増加数を生成
@@ -223,7 +305,7 @@
                 participantCount += increment;
 
                 // 最大増加数を超えないように調整
-                if (participantCount >= 40000) { // 35160 + 200
+                if (participantCount >= 40000) { // 35,160 + 4,840 = 40,000
                     participantCount = 40000;
                     clearInterval(interval);
                 }
@@ -234,6 +316,7 @@
 
         // 抽選開始処理
         function startLottery() {
+            playSound('clickSound');
             const button = document.querySelector(".start-button");
             button.disabled = true;
             button.style.backgroundColor = "#ccc";
@@ -243,36 +326,62 @@
                 document.getElementById("result").innerText = "抽選結果を確認中です...";
                 document.getElementById("result").style.display = "block";
                 scrollToCenter("result");
+                playSound('clickSound');
 
                 setTimeout(() => {
-                    document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
-                    scrollToCenter("result");
-                    setTimeout(() => {
-                        document.getElementById("popup").style.display = "block";
-                        scrollToCenter("popup");
-                    }, 2000);
+                    const isWinner = Math.random() < 0.2; // 20%の当選確率
+                    if (isWinner) {
+                        document.getElementById("result").innerText = "おめでとうございます！1225コインを獲得しました！";
+                        playSound('winSound');
+                        // 当選時の追加処理（例: アニメーション、特別メッセージ）
+                        document.getElementById("popup").style.display = "none";
+                        document.getElementById("specialMessage").style.display = "none";
+                        setTimeout(() => {
+                            revealFinalMessage(); // 当選時でも最終メッセージを表示
+                        }, 2000);
+                    } else {
+                        document.getElementById("result").innerText = "残念！今回は当たりませんでした。";
+                        playSound('loseSound');
+                        scrollToCenter("result");
+                        setTimeout(() => {
+                            document.getElementById("popup").style.display = "block";
+                            scrollToCenter("popup");
+                        }, 2000);
+                    }
                 }, 2000);
             }, 1500);
         }
 
         // 再抽選確認処理
         function confirmRetry() {
+            playSound('clickSound');
             document.getElementById("popup").style.display = "none";
             document.getElementById("result").innerText = "再抽選中...";
             scrollToCenter("result");
 
             setTimeout(() => {
-                document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
-                scrollToCenter("result");
-                setTimeout(() => {
-                    document.getElementById("specialMessage").style.display = "block";
-                    scrollToCenter("specialMessage");
-                }, 2000);
+                const isWinner = Math.random() < 0.33; // 33%の当選確率アップ
+                if (isWinner) {
+                    document.getElementById("result").innerText = "おめでとうございます！1225コインを獲得しました！";
+                    playSound('winSound');
+                    setTimeout(() => {
+                        revealFinalMessage();
+                    }, 2000);
+                } else {
+                    document.getElementById("result").innerText = "残念！今回も当たりませんでした。";
+                    playSound('loseSound');
+                    scrollToCenter("result");
+                    setTimeout(() => {
+                        document.getElementById("specialMessage").style.display = "block";
+                        scrollToCenter("specialMessage");
+                    }, 2000);
+                }
             }, 2000);
         }
 
         // 再挑戦のオファー処理
         function offerFiveCoins() {
+            playSound('clickSound');
             document.getElementById("popup").innerHTML = `
                 <p>【今だけ】<br>5コインで挑戦可能です。挑戦しますか？</p>
                 <button class="retry-button" onclick="confirmRetry()">挑戦する</button>
@@ -291,14 +400,27 @@
         function revealFinalMessage() {
             document.getElementById("specialMessage").style.display = "none";
             document.getElementById("result").style.display = "none";
-            document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
+            document.getElementById("final-message").innerHTML = `
+                <h2>実は…2025年6月に、<br>莉緒がお姉さんになります！</h2>
+                <img src="sister.png" alt="莉緒お姉さん" style="width: 150px; margin-top: 20px;">
+            `;
             document.getElementById("final-message").style.display = "block";
+            playSound('winSound');
             scrollToCenter("final-message");
         }
 
         // 要素を中央にスクロールする関数
         function scrollToCenter(elementId) {
             document.getElementById(elementId).scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        // サウンド再生関数
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play();
+            }
         }
     </script>
 </body>
