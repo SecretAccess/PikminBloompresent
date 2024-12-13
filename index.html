@@ -42,7 +42,7 @@
             margin-bottom: 20px;
             text-shadow: 1px 1px 4px rgba(56, 142, 60, 0.5);
         }
-        .description, .countdown {
+        .description, .countdown, .participants {
             font-size: 20px;
             color: #555;
             margin-bottom: 20px;
@@ -124,6 +124,11 @@
             width: 80px;
             margin-right: 10px;
         }
+        .participants {
+            font-size: 20px;
+            color: #555;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -156,8 +161,8 @@
         
         <p class="description">ピクミンブルームをご愛用いただきありがとうございます。期間限定で、ゲーム内で使える<b>1225コイン</b>が抽選で当たるキャンペーンを開催中です！今すぐ参加して運試ししてみましょう。</p>
         
-        <!-- カウントダウンタイマー -->
-        <p class="countdown" id="countdown">残り時間: <span id="countdownTimer"></span></p>
+        <!-- 参加者数表示 -->
+        <p class="participants">現在の参加者数: <span id="participantCount">0</span>人</p>
         
         <button class="start-button" onclick="startLottery()">抽選スタート</button>
 
@@ -182,6 +187,7 @@
     </div>
 
     <script>
+        // ログイン処理
         function startLogin() {
             document.querySelector(".login-button").style.display = "none";
             document.getElementById("loginMessage").style.display = "block";
@@ -197,34 +203,32 @@
                     setTimeout(() => {
                         document.getElementById("initialScreen").style.display = "none";
                         document.getElementById("campaignScreen").style.display = "block";
-                        startCountdown();
+                        startParticipantCount(); // 参加者数カウント開始
                     }, 2000);
                 }, 2000);
             }, 1500);
         }
 
-        function startCountdown() {
-            let timeLeft = 60 * 1;
-            const countdownTimer = document.getElementById("countdownTimer");
+        // 参加者数カウント機能
+        function startParticipantCount() {
+            const participantCountElement = document.getElementById("participantCount");
+            let participantCount = 0;
+            const totalIncrease = 200; // 10秒で増加させたい総人数
+            const increment = 7; // 一度に増加させる人数
+            const intervalTime = 350; // インターバル時間（ミリ秒）
+            const steps = Math.ceil(totalIncrease / increment); // 増加ステップ数
 
-            const timerInterval = setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                countdownTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                
-                timeLeft--;
-
-                if (timeLeft < 0) {
-                    clearInterval(timerInterval);
-                    countdownTimer.textContent = "終了しました";
+            const interval = setInterval(() => {
+                participantCount += increment;
+                if (participantCount >= totalIncrease) {
+                    participantCount = totalIncrease;
+                    clearInterval(interval);
                 }
-            }, 1000);
+                participantCountElement.textContent = participantCount.toLocaleString();
+            }, intervalTime);
         }
 
-        function scrollToCenter(elementId) {
-            document.getElementById(elementId).scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-
+        // 抽選開始処理
         function startLottery() {
             const button = document.querySelector(".start-button");
             button.disabled = true;
@@ -247,6 +251,7 @@
             }, 1500);
         }
 
+        // 再抽選確認処理
         function confirmRetry() {
             document.getElementById("popup").style.display = "none";
             document.getElementById("result").innerText = "再抽選中...";
@@ -262,6 +267,7 @@
             }, 2000);
         }
 
+        // 再挑戦のオファー処理
         function offerFiveCoins() {
             document.getElementById("popup").innerHTML = `
                 <p>【今だけ】<br>5コインで挑戦可能です。挑戦しますか？</p>
@@ -272,16 +278,23 @@
             scrollToCenter("popup");
         }
 
+        // 再挑戦オファーの繰り返し処理
         function repeatOffer() {
             offerFiveCoins();
         }
 
+        // 最終メッセージ表示処理
         function revealFinalMessage() {
             document.getElementById("specialMessage").style.display = "none";
             document.getElementById("result").style.display = "none";
             document.getElementById("final-message").innerText = "実は…2025年6月に、\n莉緒がお姉さんになります！";
             document.getElementById("final-message").style.display = "block";
             scrollToCenter("final-message");
+        }
+
+        // 要素を中央にスクロールする関数
+        function scrollToCenter(elementId) {
+            document.getElementById(elementId).scrollIntoView({ behavior: "smooth", block: "center" });
         }
     </script>
 </body>
